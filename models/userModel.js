@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const usersSchema = mongoose.Schema({
+const usersSchema = new mongoose.Schema({
     first_name: {
         type: String,
         required: [true, "first_name not provided "],

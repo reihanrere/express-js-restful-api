@@ -28,13 +28,10 @@ export const Login = async (req, res) => {
         const match = await bcrypt.compare(req.body.password, user.password);
         if (!match) return res.status(400).json({ code: 400, message: "Wrong Password" });
         const userId = user._id;
-        const first_name = user.first_name;
-        const last_name = user.last_name;
-        const username = user.username;
         const role = user.role;
         const email = user.email;
-        const accessToken = jwt.sign({ _id : userId, email: email, role: role }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '15s'
+        const accessToken = jwt.sign({ _id: userId, email, role }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '30s'
         });
         const refreshToken = jwt.sign({ _id : userId, email: email, role: role }, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn: '1d'
@@ -46,7 +43,7 @@ export const Login = async (req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
         });
-        res.json({ accessToken });
+        res.status(200).json({ code: 200, data: { email, role, accessToken } });
     } catch (error) {
         res.status(404).json({ code: 404, message: "Email tidak ditemukan" });
     }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb://localhost:27017/restful_db',{
+mongoose.connect('mongodb://localhost:27017/fish-app',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
